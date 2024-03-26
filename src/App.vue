@@ -18,7 +18,12 @@ onMounted(() => {
 });
 
 // TODO: 删除功能
-
+//思路：獲取當前行ID -> 通過id調用刪除接口 -> 刷新列表
+const onDelete = async (id) => {
+  await axios.delete(`/del/${id}`);
+  console.log(id, "已刪除");
+  getList();
+};
 // TODO: 编辑功能
 </script>
 
@@ -29,9 +34,11 @@ onMounted(() => {
       <el-table-column label="姓名" prop="name" width="150"></el-table-column>
       <el-table-column label="籍贯" prop="place"></el-table-column>
       <el-table-column label="操作" width="150">
-        <template #default>
+        <template #default="{ row }">
           <el-button type="primary" link>編輯</el-button>
-          <el-button type="danger" link>刪除</el-button>
+          <el-button type="danger" @click="onDelete(row.id)" link
+            >刪除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
