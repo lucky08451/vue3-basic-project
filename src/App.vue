@@ -25,6 +25,14 @@ const onDelete = async (id) => {
   getList();
 };
 // TODO: 编辑功能
+// 回調數據( 調用詳情接口/當前行的靜態數據)
+const EditRef = ref(null);
+const onEdit = (row) => {
+  EditRef.value.open(row);
+};
+// 更新
+
+// console.log(EditRef.value);
 </script>
 
 <template>
@@ -35,7 +43,7 @@ const onDelete = async (id) => {
       <el-table-column label="籍贯" prop="place"></el-table-column>
       <el-table-column label="操作" width="150">
         <template #default="{ row }">
-          <el-button type="primary" link>編輯</el-button>
+          <el-button type="primary" @click="onEdit(row)" link>編輯</el-button>
           <el-button type="danger" @click="onDelete(row.id)" link
             >刪除</el-button
           >
@@ -43,7 +51,7 @@ const onDelete = async (id) => {
       </el-table-column>
     </el-table>
   </div>
-  <Edit />
+  <Edit ref="EditRef" @onUpdata="getList" />
 </template>
 
 <style scoped>
